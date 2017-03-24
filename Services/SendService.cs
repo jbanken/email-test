@@ -1,25 +1,25 @@
 ﻿using Email.Services.Interfaces;
 using System.Threading.Tasks;
 using Email.Services.Models;
-using Email.DataProviders.Interfaces;
-
 namespace Email.Services
 {
     public class SendService : ISendService
     {
-        private IEmailDataProvider _emailDataProvider { get; set; }
+        private DataProviders.Interfaces.IEmailDataProvider _emailDataProvider { get; set; }
 
-        public SendService(IEmailDataProvider emailDataProvider)
+        public SendService(DataProviders.Interfaces.IEmailDataProvider emailDataProvider)
         {
             _emailDataProvider = emailDataProvider;
         }
 
         public async Task<SendResponse> Send(SendRequest request)
         {
-            var log = new DataProviders.Models.Log();
+            var log = new Entities.EmailLog();
+            log.To = request.To;
+            log.From = request.From;
             log = await _emailDataProvider.SaveLog(log);
 
-            var logBody = new DataProviders.Models.LogBody();
+            var logBody = new Entities.EmailLogBody();
             logBody.EmailLogId = log.Id;
             await _emailDataProvider.SaveLogBody(logBody);
 

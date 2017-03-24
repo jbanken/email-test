@@ -16,6 +16,8 @@ namespace Email
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -24,6 +26,7 @@ namespace Email
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSingleton(_ => Configuration);
             Services.Config.InjectionConfig.SetupInjections(services);
         }
 
