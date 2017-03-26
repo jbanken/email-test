@@ -6,6 +6,10 @@ namespace Email.DataProviders
     {
         public string BuildInsertStatement(string tableName, List<string> cols)
         {
+            cols.Add("IsActive");
+            cols.Add("CreateDate");
+            cols.Add("ModifiedDate");
+
             var result = "Insert into " + tableName + "(";
             for (var i = 0; i < cols.Count; i++)
             {
@@ -24,6 +28,7 @@ namespace Email.DataProviders
 
         public string BuildUpdateStatement(string tableName, List<string> cols, string Id="Id")
         {
+            cols.Add("ModifiedDate");
             var result = "Update " + tableName + " set";
             for (var i = 0; i < cols.Count; i++)
             {

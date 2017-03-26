@@ -11,5 +11,8 @@ namespace Email.Services.Models
         [DataMember]
         [JsonConverter(typeof(StringEnumConverter))]
         public Status Status { get; set; }
+        
+        [DataMember]
+        public System.Guid EmailLogId { get; set; }
     }
 }

@@ -15,13 +15,13 @@ namespace Email.Controllers
         {
             _emailService = emailService;
         }
-        // POST api/values
+
         [HttpPost]
-        public async Task<ObjectResult> Post([FromBody]Email.Services.Models.SendRequest request)
+        public async Task<IActionResult> Post([FromBody]Services.Models.SendRequest request)
         {
             var response = await _emailService.Send(request);
 
-            return Ok(response);
+            return Created("api/email/"+response.EmailLogId, response);
         }
 
     }

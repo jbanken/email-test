@@ -14,16 +14,15 @@ namespace Email.Services
 
         public async Task<SendResponse> Send(SendRequest request)
         {
-            var log = new Entities.EmailLog();
-            log.To = request.To;
-            log.From = request.From;
+            var log = request.ToEmailLog();
             log = await _emailDataProvider.SaveLog(log);
 
-            var logBody = new Entities.EmailLogBody();
+            var logBody = request.ToEmailLogBody();
             logBody.EmailLogId = log.Id;
             await _emailDataProvider.SaveLogBody(logBody);
 
             var response = new SendResponse() { Status = Status.Queued };
+            response.EmailLogId = log.Id;
             return response;
         }
     }

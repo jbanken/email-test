@@ -17,6 +17,9 @@ namespace Email.Entities
         public string Subject { get; set; }
         public string ReferenceCode { get; set; }
         public string ThirdPartyReferenceCode { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
         public EmailLogBody Body { get; set; }
         public DateTime? SentDate { get; set; }
         public DateTime? DeliveredDate { get; set; }

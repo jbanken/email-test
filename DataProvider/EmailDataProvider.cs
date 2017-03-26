@@ -13,21 +13,12 @@ namespace Email.DataProviders
     {
         private string ConnectionString { get; set; }
         private List<string> EmailLogCols { get; set; }
+        private List<string> EmailLogBodyCols { get; set; }
         private readonly IConfigurationRoot configuration;
         public EmailDataProvider(IConfigurationRoot configuration)
         {
-            EmailLogCols = new List<string>();
-            EmailLogCols.Add("Id");
-            EmailLogCols.Add("To");
-            EmailLogCols.Add("ToName");
-            EmailLogCols.Add("From");
-            EmailLogCols.Add("FromName");
-            EmailLogCols.Add("Subject");
-            EmailLogCols.Add("ReferenceCode");
-            EmailLogCols.Add("ThirdPartyReferenceCode");
-            EmailLogCols.Add("SentDate");
-            EmailLogCols.Add("DeliveredDate");
-            EmailLogCols.Add("OpenDate");
+            EmailLogCols = new List<string>() { "Id", "To","ToName", "From", "FromName", "Subject", "ReferenceCode", "ThirdPartyReferenceCode","SentDate", "DeliveredDate", "OpenDate" };
+            EmailLogBodyCols = new List<string>() { "EmailLogId","HTMLBody","TextBody"  };
 
             ConnectionString = ConfigurationExtensions.GetConnectionString(configuration, "DefaultConnection");
         }
@@ -36,22 +27,20 @@ namespace Email.DataProviders
         {
             using(var db = new SqlConnection(ConnectionString)) {
                 db.Open();
+                var cols = EmailLogCols;
 
                 if (log.Id == Guid.Empty)
                 {
                     log.Id = Guid.NewGuid();
-                    try {
-                        
-                         await db.ExecuteAsync(BuildInsertStatement("[email].log",EmailLogCols),log);
-                    }
-                    catch(Exception ex)
-                    {
-                        var one = 1;
-                    }
+                    log.CreateDate = DateTime.UtcNow;
+                    log.ModifiedDate = DateTime.UtcNow;
+                    log.IsActive = true;
+                    await db.ExecuteAsync(BuildInsertStatement("[email].log", cols),log);
                 }
                 else
                 {
-                    await db.ExecuteAsync(BuildUpdateStatement("[email].log", EmailLogCols), log);
+                    log.ModifiedDate = DateTime.UtcNow;
+                    await db.ExecuteAsync(BuildUpdateStatement("[email].log", cols), log);
                 }
                 db.Close();
 
@@ -61,7 +50,26 @@ namespace Email.DataProviders
 
         public async Task<EmailLogBody> SaveLogBody(EmailLogBody logBody)
         {
-            return new EmailLogBody();
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                db.Open();
+
+                if (logBody.CreateDate == DateTime.MinValue)
+                {
+                    logBody.CreateDate = DateTime.UtcNow;
+                    logBody.ModifiedDate = DateTime.UtcNow;
+                    logBody.IsActive = true;
+                    await db.ExecuteAsync(BuildInsertStatement("[email].logBody", EmailLogBodyCols), logBody);
+                }
+                else
+                {
+                    logBody.ModifiedDate = DateTime.UtcNow;
+                    await db.ExecuteAsync(BuildUpdateStatement("[email].logBody", EmailLogBodyCols), logBody);
+                }
+                db.Close();
+
+                return logBody;
+            }
         }
     }
 }
