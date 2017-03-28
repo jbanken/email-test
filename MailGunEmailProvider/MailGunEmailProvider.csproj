@@ -2,18 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <RootNamespace>Email.Services</RootNamespace>
+    <AssemblyName>Email.MailGunEmailProvider</AssemblyName>
+    <RootNamespace>Email.MailGunEmailProvider</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DataProvider\DataProviders.csproj" />
-    <ProjectReference Include="..\Entities\Entities.csproj" />
-    <ProjectReference Include="..\MailGunEmailProvider\MailGunEmailProvider.csproj" />
   </ItemGroup>
 
 </Project>

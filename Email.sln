@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProviders", "DataProvid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{CACC33E4-CEA4-490F-9C1C-E944F8EB1BF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailGunEmailProvider", "MailGunEmailProvider\MailGunEmailProvider.csproj", "{AA8960A8-68B8-4DF0-A6DF-A0831EA170CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{CACC33E4-CEA4-490F-9C1C-E944F8EB1BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CACC33E4-CEA4-490F-9C1C-E944F8EB1BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CACC33E4-CEA4-490F-9C1C-E944F8EB1BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA8960A8-68B8-4DF0-A6DF-A0831EA170CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA8960A8-68B8-4DF0-A6DF-A0831EA170CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA8960A8-68B8-4DF0-A6DF-A0831EA170CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA8960A8-68B8-4DF0-A6DF-A0831EA170CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

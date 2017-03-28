@@ -40,7 +40,14 @@ namespace Email.DataProviders
                 else
                 {
                     log.ModifiedDate = DateTime.UtcNow;
-                    await db.ExecuteAsync(BuildUpdateStatement("[email].log", cols), log);
+                    try
+                    {
+                        await db.ExecuteAsync(BuildUpdateStatement("[email].log", cols), log);
+                    }
+                    catch (Exception ex)
+                    {
+                        var one = 1;
+                    }
                 }
                 db.Close();
 

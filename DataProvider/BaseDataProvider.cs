@@ -4,8 +4,10 @@ namespace Email.DataProviders
 {
     public class BaseDataProvider
     {
-        public string BuildInsertStatement(string tableName, List<string> cols)
+        public string BuildInsertStatement(string tableName, List<string> columns)
         {
+            var cols = new List<string>();
+            cols.AddRange(columns);
             cols.Add("IsActive");
             cols.Add("CreateDate");
             cols.Add("ModifiedDate");
@@ -26,8 +28,10 @@ namespace Email.DataProviders
             return result;
         }
 
-        public string BuildUpdateStatement(string tableName, List<string> cols, string Id="Id")
+        public string BuildUpdateStatement(string tableName, List<string> columns, string Id="Id")
         {
+            var cols = new List<string>();
+            cols.AddRange(columns);
             cols.Add("ModifiedDate");
             var result = "Update " + tableName + " set";
             for (var i = 0; i < cols.Count; i++)
@@ -35,7 +39,7 @@ namespace Email.DataProviders
                 result += "[" + cols[i] + "] = @"+cols[i];
                 if (i != cols.Count - 1) { result += ","; }
             }
-            result += "where [" + Id + "] = @"+ Id;
+            result += " where [" + Id + "] = @"+ Id;
             return result;
         }
     }
